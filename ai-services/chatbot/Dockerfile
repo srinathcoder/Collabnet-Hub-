@@ -4,8 +4,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-RUN python -m nltk.downloader punkt stopwords wordnet punkt_tab
 
 COPY . .
 
-CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8001}
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8003}
