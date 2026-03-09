@@ -1,0 +1,72 @@
+services:
+  # ─────────────────────────────────
+  # Frontend (React/Vite Static Site)
+  # ─────────────────────────────────
+  - type: web
+    name: collabnet-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://collabnet-backend.onrender.com/api/v1
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+  # ─────────────────────────────────
+  # Backend (Node.js/Express)
+  # ─────────────────────────────────
+  - type: web
+    name: collabnet-backend
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: MONGO_URI
+        sync: false  # Set manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: RESUME_SERVICE_URL
+        value: https://collabnet-resume-analyzer.onrender.com
+      - key: AI_SERVICE_URL
+        value: https://collabnet-resume-analyzer.onrender.com
+      - key: CERTIFICATE_SERVICE_URL
+        value: https://collabnet-certificate-detector.onrender.com
+      - key: CHATBOT_SERVICE_URL
+        value: https://collabnet-chatbot.onrender.com
+
+  # ─────────────────────────────────
+  # Resume Analyzer (Python/FastAPI)
+  # ─────────────────────────────────
+  - type: web
+    name: collabnet-resume-analyzer
+    runtime: python
+    rootDir: ai-services/resume_analyzer
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+  # ─────────────────────────────────
+  # Certificate Detector (Python/FastAPI)
+  # ─────────────────────────────────
+  - type: web
+    name: collabnet-certificate-detector
+    runtime: python
+    rootDir: ai-services/certificate_detector
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+
+  # ─────────────────────────────────
+  # Chatbot (Python/FastAPI)
+  # ─────────────────────────────────
+  - type: web
+    name: collabnet-chatbot
+    runtime: python
+    rootDir: ai-services/chatbot
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT

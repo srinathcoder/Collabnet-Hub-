@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+scikit-learn
+nltk
+spacy
+opencv-python
+pytesseract
+python-multipart
+PyPDF2
+python-dotenv
+pymongo
+motor
+requests
+pydantic
