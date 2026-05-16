@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import api from "../services/api";
 
 function AdminDashboard() {
-  const auth = useSelector((state) => state.auth);
+
   const [stats, setStats] = useState({});
   const [users, setUsers] = useState([]);
   const [jobs, setJobs] = useState([]);

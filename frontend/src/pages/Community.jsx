@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
@@ -28,16 +28,16 @@ function Community() {
   const [commentInputs, setCommentInputs] = useState({});
   const [expandedComments, setExpandedComments] = useState({});
 
-  const fetchPosts = async (tag = activeTag) => {
+  const fetchPosts = useCallback(async (tag = activeTag) => {
     try {
       setLoading(true);
       const res = await api.get(`/community/posts${tag !== 'all' ? `?tag=${tag}` : ''}`);
       setPosts(res.data);
     } catch (err) { console.error(err); }
     finally { setLoading(false); }
-  };
+  }, [activeTag]);
 
-  useEffect(() => { fetchPosts(); }, [activeTag]);
+  useEffect(() => { fetchPosts(); }, [activeTag, fetchPosts]);
 
   const handlePost = async () => {
     if (!newPost.trim()) return;
@@ -72,7 +72,7 @@ function Community() {
     try {
       await api.delete(`/community/posts/${postId}`);
       setPosts(posts.filter(p => p._id !== postId));
-    } catch (err) { alert('Failed to delete'); }
+    } catch { alert('Failed to delete'); }
   };
 
   const timeAgo = (date) => {

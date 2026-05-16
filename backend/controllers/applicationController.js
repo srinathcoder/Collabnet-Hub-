@@ -59,8 +59,9 @@ exports.applyToJob = async (req, res) => {
     let missingSkills = [];
 
     try {
+      const resumeServiceUrl = process.env.RESUME_SERVICE_URL || 'http://localhost:8001';
       const aiResponse = await axios.post(
-        "http://localhost:8001/analyze",
+        `${resumeServiceUrl}/analyze`,
         {
           resume: resumeText,
           job_description: jobDesc,
