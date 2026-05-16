@@ -29,7 +29,7 @@ services:
       - key: PORT
         value: "10000"
       - key: MONGO_URI
-        sync: false  # Set manually in Render dashboard
+        value: mongodb+srv://srinath2302005_db_user:yiksu89X8eu1Rmb5@cluster0.xysycow.mongodb.net/collabnet?appName=Cluster0
       - key: JWT_SECRET
         generateValue: true
       - key: RESUME_SERVICE_URL
