@@ -29,3 +29,15 @@ exports.getJobs = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Get only jobs posted by the currently logged-in recruiter
+exports.getMyJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({ postedBy: req.user._id })
+      .populate('postedBy', 'name email')
+      .sort({ createdAt: -1 });
+    res.json(jobs);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};

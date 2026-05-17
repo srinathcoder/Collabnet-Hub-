@@ -13,7 +13,7 @@ function RecruiterDashboard() {
   const [applicantsLoading, setApplicantsLoading] = useState({});
   const [updateLoading, setUpdateLoading] = useState({});
 
-  useEffect(() => { api.get('/jobs').then(r => setJobs(r.data || [])).catch(console.error).finally(() => setLoadingJobs(false)); }, []);
+  useEffect(() => { api.get('/jobs/my-jobs').then(r => setJobs(r.data || [])).catch(console.error).finally(() => setLoadingJobs(false)); }, []);
   useEffect(() => { if (jobs.length) jobs.forEach((j) => fetchApplicants(j._id)); }, [jobs]);
 
   const fetchApplicants = async (jobId) => {
