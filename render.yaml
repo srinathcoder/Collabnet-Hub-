@@ -50,6 +50,9 @@ services:
     rootDir: ai-services/resume_analyzer
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
 
   # ─────────────────────────────────
   # Certificate Detector (Python/FastAPI)
@@ -60,6 +63,9 @@ services:
     rootDir: ai-services/certificate_detector
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
 
   # ─────────────────────────────────
   # Chatbot (Python/FastAPI)
@@ -70,3 +76,6 @@ services:
     rootDir: ai-services/chatbot
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
